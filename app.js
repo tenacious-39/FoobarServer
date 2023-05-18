@@ -9,6 +9,24 @@ const mongoose = require("mongoose");
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const findOrCreate = require("mongoose-findorcreate");
 
+
+
+//latest addition:
+var sess = {
+  secret: 'keyboard cat',
+  cookie: {}
+}
+
+if (app.get('env') === 'production') {
+  app.set('trust proxy', 1) // trust first proxy
+  sess.cookie.secure = true // serve secure cookies
+}
+
+app.use(session(sess));
+// latest addition ends 
+
+
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -33,7 +51,6 @@ const userSchema = new mongoose.Schema({
 userSchema.plugin(findOrCreate);
 const User = new mongoose.model("user", userSchema);
 
-app.set("trust proxy", 1);
 app.use(cookieSession({
     maxAge: 24 * 60 * 60 * 100,
     keys: ["secret"],
