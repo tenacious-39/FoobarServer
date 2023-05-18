@@ -33,6 +33,7 @@ const userSchema = new mongoose.Schema({
 userSchema.plugin(findOrCreate);
 const User = new mongoose.model("user", userSchema);
 
+app.set("trust proxy", 1);
 app.use(cookieSession({
     maxAge: 24 * 60 * 60 * 100,
     keys: ["secret"],
