@@ -78,6 +78,7 @@ app.get("/logout", function (req, res) {
     res.redirect(process.env.CLIENT_REDIRECT_URL);
 });
 app.get("/login/success", function (req, res) {
+    console.log(req.user);
     res.status(200).json({
         success: true,
         message: "success",
